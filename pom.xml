@@ -6,7 +6,7 @@
 
     <groupId>cn.soilove</groupId>
     <artifactId>common-utils</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>common-utils</name>
     <description>common utils</description>
 
@@ -57,6 +57,12 @@
             <groupId>com.vdurmont</groupId>
             <artifactId>emoji-java</artifactId>
             <version>4.0.0</version>
+        </dependency>
+        <!-- 结巴分词 -->
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 
