@@ -67,7 +67,6 @@ public class RandomUtils {
      * @return
      */
     public static String randomStr4unique(int length,String text) {
-        char[] ars = text.toCharArray();
         List<String> list = new ArrayList<>();
         for(int i = 0; i < text.length(); i ++) {
             list.add(text.charAt(i) + "");
