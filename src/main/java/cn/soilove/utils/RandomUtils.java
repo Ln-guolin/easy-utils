@@ -1,10 +1,10 @@
 package cn.soilove.utils;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.RandomStringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * random工具
@@ -13,6 +13,42 @@ import java.util.List;
  * @create: 2020-02-04 10:32
  **/
 public class RandomUtils {
+
+    private static final Random random = new Random();
+
+    /**
+     * 随机指定获取集合元素
+     * @param data
+     * @param num
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> randomList(List<T> data,int num){
+        List<T> res = Lists.newArrayList();
+        while (res.size() < num){
+            res.add(data.get(random.nextInt(data.size())));
+        }
+        return res;
+    }
+
+    /**
+     * 随机指定获取集合元素 - 不重复
+     * @param data
+     * @param num
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> randomList4unique(List<T> data,int num){
+        Set<Integer> idxs = Sets.newHashSet();
+        while (idxs.size() < num){
+            idxs.add(random.nextInt(data.size()));
+        }
+        List<T> res = Lists.newArrayList();
+        for(Integer idx : idxs){
+            res.add(data.get(idx));
+        }
+        return res;
+    }
 
     /**
      * 随机定长字符
