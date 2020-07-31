@@ -189,7 +189,7 @@ public class QLExpressUtils {
     }
 
 
-    public static void main1(String[] args) {
+    public static void main(String[] args) {
         try{
             // 测试表达式写循环
             List<Integer> list = Arrays.asList(1,13,4,5,6,9);
@@ -204,10 +204,6 @@ public class QLExpressUtils {
         }catch (Exception e){
             log.error("[QL]表达式执行异常!" ,e);
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(execute("10/3"));;
     }
 
 }
