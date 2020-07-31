@@ -26,6 +26,7 @@ public class QLExpressUtils {
      * aIstrace 是否跟踪执行指令的过程
      */
     private static final ExpressRunner expressRunner = new ExpressRunner(true,false);
+    private static final ExpressRunner expressRunner4NoPrecise = new ExpressRunner(false,false);
 
     /**
      * 表达式执行 - 默认高精度
@@ -36,6 +37,23 @@ public class QLExpressUtils {
         try{
             // 表达式执行
             Object r = expressRunner.execute(express, null, null, true, false);
+            log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
+            return r;
+        }catch (Exception e){
+            log.error("[QL]表达式执行异常！express=" + express,e);
+            return null;
+        }
+    }
+
+    /**
+     * 表达式执行 - 损失精度
+     * @param express 表达式，如：3*8
+     * @return
+     */
+    public static Object execute4NoPrecise(String express){
+        try{
+            // 表达式执行
+            Object r = expressRunner4NoPrecise.execute(express, null, null, true, false);
             log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
             return r;
         }catch (Exception e){
@@ -171,7 +189,7 @@ public class QLExpressUtils {
     }
 
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         try{
             // 测试表达式写循环
             List<Integer> list = Arrays.asList(1,13,4,5,6,9);
@@ -186,6 +204,10 @@ public class QLExpressUtils {
         }catch (Exception e){
             log.error("[QL]表达式执行异常!" ,e);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(execute("10/3"));;
     }
 
 }
