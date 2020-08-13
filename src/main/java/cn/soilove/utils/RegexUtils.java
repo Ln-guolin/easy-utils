@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
  *
  */
 public class RegexUtils {
-	
+
 	public static boolean doMatch(String regex,String txt){
 		return match(regex, txt);
 	}
-	
+
 	public static String getString(String value,String reg){
 		Matcher matcher = getMatcher(value,reg);
 		String result ="";
@@ -25,7 +25,7 @@ public class RegexUtils {
 		}
 		return result;
 	}
-	
+
 	public static String getString(String value,String reg,int index){
 		Matcher matcher = getMatcher(value,reg);
 		String result ="";
@@ -34,13 +34,13 @@ public class RegexUtils {
 		}
 		return result;
 	}
-	
-	
+
+
 	private static Matcher getMatcher(String value,String reg){
-		Pattern pattern = Pattern.compile(reg);  
+		Pattern pattern = Pattern.compile(reg);
 	    return  pattern.matcher(value.trim());
 	}
-	
+
 
 	/**
 	 * 执行器
@@ -55,10 +55,10 @@ public class RegexUtils {
 		Matcher matcher = pattern.matcher(str);
 		return matcher.matches();
 	}
-	
+
 	/**
 	 * 验证验证输入字母和数字
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isLetterAndNumber(String str) {
@@ -67,7 +67,7 @@ public class RegexUtils {
 	}
 	/**
 	 * 验证验证输入字母
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isLetter(String str) {
@@ -77,7 +77,7 @@ public class RegexUtils {
 
 	/**
 	 * 验证验证输入字母和数字，减号，下划线
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isLetterAndNumberAndOther(String str) {
@@ -87,17 +87,17 @@ public class RegexUtils {
 
 	/**
 	 * 验证验证输入字母和中文
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isLetterAndChinese(String str) {
 		String regex = "^[A-Z|a-z|\u4e00-\u9fa5]+$";
 		return match(regex, str);
 	}
-	
+
 	/**
 	 * 验证验证输入字母和中文、数字
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isLetterORNumberOrChinese(String str) {
@@ -107,7 +107,7 @@ public class RegexUtils {
 
 	/**
 	 * 验证输入汉字
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isChinese(String str) {
@@ -117,7 +117,7 @@ public class RegexUtils {
 
 	/**
 	 * 验证输入数字(整数)
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isNumber(String str) {
@@ -148,7 +148,7 @@ public class RegexUtils {
 	}
 	/**
 	 * 验证输入浮点数字
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isDoubleNumber(String str) {
@@ -157,30 +157,20 @@ public class RegexUtils {
 	}
 
 	/**
-	 * 验证邮箱
-	 * 
-	 * @return 如果是符合的字符串,返回 <b>true </b>,否则为 <b>false </b>
-	 */
-	public static boolean isEmail(String str) {
-		String regex = "^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-		return match(regex, str);
-	}
-	
-	/**
 	 * 是否存在特殊字符
-	 * 
+	 *
 	 * @param str 待验证的字符串
-	 * @return 
+	 * @return
 	 */
 	public static boolean IsNotTS(String str) {
 		String regex = "^[^|~|$|\"|'|<|>|&|?|*|~|{|}|[|]|+|#|‘|%|…|￥|`|·|—|=|【|】|;|’]+$";
-		
+
 		try {
 			return match(regex, str);
 		} catch (Exception e) {
 			return false;
 		}
-		
+
 	}
 	/**
 	 * 验证是否为合法ip
@@ -189,28 +179,27 @@ public class RegexUtils {
 	 */
 	public static boolean isIp(String str) {
 		String regex = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
-		
+
 		try {
 			return match(regex, str);
 		} catch (Exception e) {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 手机验证
 	 * @param phone
 	 * @return 如果是符合的规则的手机,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isPhone(String phone){
-//		String regex = "^0?(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])[0-9]{8}$";
 		String regex = "^0?1(2|3|4|5|6|7|8|9)[0-9]{9}$";
 		return match(regex, phone);
 	}
-	
+
 	/**
 	 * 密码验证，字母和数字组成
-	 * 
+	 *
 	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
 	 */
 	public static boolean isPassword(String str) {
@@ -226,32 +215,13 @@ public class RegexUtils {
 		String regex = "^\\d{6}$";
 		return match(regex, str);
 	}
-	
+
 	/**
 	 * 验证是否是整数
 	 * @return
 	 */
 	public static boolean isRoundNum(String str) {
 		String regex = "^\\-?\\d*$";
-		return match(regex, str);
-	}
-
-	/**
-	 * 邮箱校验
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public static boolean isMail(String value) {
-		String regex = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-		return match(regex, value);
-	}
-	
-	/**
-	 * 密码的设定为6-20位字母、数字下划线组成
-	 */
-	public static boolean isLoginPwd(String str) {
-		String regex =  "[A-Za-z0-9_]+" ;
 		return match(regex, str);
 	}
 
@@ -263,4 +233,29 @@ public class RegexUtils {
 	public static String replaceHasLetterORNumberOrChinese(String str){
 		return str.replaceAll("[^A-Z|a-z|0-9|\u4e00-\u9fa5]", "");
 	}
+
+	/**
+	 * 验证Email
+	 * @param email email地址，格式：zhangsan@sina.com，zhangsan@xxx.com.cn，xxx代表邮件服务商
+	 * @return 验证成功返回true，验证失败返回false
+	 */
+	public static boolean isEmail(String email) {
+		String regex = "\\w+@\\w+\\.[a-z]+(\\.[a-z]+)?";
+		return Pattern.matches(regex, email);
+	}
+
+	/**
+	 * 验证身份证号码
+	 * @param idCard 居民身份证号码18位，第一位不能为0，最后一位可能是数字或字母，中间16位为数字 \d同[0-9]
+	 * @return 验证成功返回true，验证失败返回false
+	 */
+	public static boolean isIdCard(String idCard) {
+		String regex = "[1-9]\\d{16}[a-zA-Z0-9]{1}";
+		return Pattern.matches(regex,idCard);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(replaceHasLetterORNumberOrChinese("23ji.a3**&f 国家"));
+	}
+
 }
