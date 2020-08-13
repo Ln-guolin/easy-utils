@@ -254,8 +254,5 @@ public class RegexUtils {
 		return Pattern.matches(regex,idCard);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(replaceHasLetterORNumberOrChinese("23ji.a3**&f 国家"));
-	}
 
 }
