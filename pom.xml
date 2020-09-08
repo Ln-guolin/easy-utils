@@ -6,7 +6,7 @@
 
     <groupId>cn.soilove</groupId>
     <artifactId>common-utils</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>common-utils</name>
     <description>common utils</description>
 
@@ -63,6 +63,17 @@
             <groupId>com.huaban</groupId>
             <artifactId>jieba-analysis</artifactId>
             <version>1.0.2</version>
+        </dependency>
+        <!-- 二维码 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.0</version>
         </dependency>
     </dependencies>
 
