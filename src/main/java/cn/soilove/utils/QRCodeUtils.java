@@ -58,7 +58,7 @@ public class QRCodeUtils {
     }
 
     /**
-     * 生成二维码 - 生成到输出流
+     * 生成二维码 - 生成到BufferedImage
      */
     public static BufferedImage writeToBufferedImage(String text) throws WriterException {
         // 开始生成二维码
