@@ -9,7 +9,7 @@ pom文件添加依赖，直接使用即可
 <dependency>
     <groupId>cn.soilove</groupId>
     <artifactId>common-utils</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
