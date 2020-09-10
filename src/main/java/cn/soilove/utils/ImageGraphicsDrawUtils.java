@@ -287,6 +287,7 @@ public class ImageGraphicsDrawUtils {
      * @throws IOException
      */
     public static void write(GraphicsCreate create,OutputStream output) throws IOException {
+        create.getGraphics2D().dispose();
         ImageIO.write(create.getCanvas(), "png", output);
     }
 
@@ -297,6 +298,7 @@ public class ImageGraphicsDrawUtils {
      * @throws IOException
      */
     public static void write(GraphicsCreate create,File file) throws IOException {
+        create.getGraphics2D().dispose();
         ImageIO.write(create.getCanvas(), "png", file);
     }
 
