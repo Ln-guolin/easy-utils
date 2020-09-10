@@ -6,10 +6,7 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.text.AttributedString;
 import java.util.ArrayList;
@@ -300,6 +297,18 @@ public class ImageGraphicsDrawUtils {
     public static void write(GraphicsCreate create,File file) throws IOException {
         create.getGraphics2D().dispose();
         ImageIO.write(create.getCanvas(), "png", file);
+    }
+
+    /**
+     * 将字节写入文件
+     * @param b
+     * @param path
+     * @throws Exception
+     */
+    public static void write(byte[] b,String path) throws Exception{
+        FileOutputStream fout = new FileOutputStream(path);
+        fout.write(b);
+        fout.close();
     }
 
     /**
