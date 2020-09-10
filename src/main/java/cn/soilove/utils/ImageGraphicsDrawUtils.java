@@ -158,12 +158,29 @@ public class ImageGraphicsDrawUtils {
      * @throws IOException
      */
     public static void draw4Image(Graphics2D g, String imgUrl,int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
-
-        // 设置背景
+        // 读取图片
         BufferedImage image = ImageIO.read(new URL(imgUrl));
+        // 绘制
         calcDrawImage(g, width, height, x, y, hasArcw, arcw, image);
-
     }
+
+    /**
+     * 绘制图片 到 画布上
+     * @param g 画布
+     * @param bufferedImage 图片BufferedImage
+     * @param width 图片宽
+     * @param height 图片高
+     * @param x 位置，x
+     * @param y 位置，y
+     * @param hasArcw 是否圆角
+     * @param arcw 圆角值
+     * @throws IOException
+     */
+    public static void draw4Image(Graphics2D g, BufferedImage bufferedImage,int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+        // 绘制
+        calcDrawImage(g, width, height, x, y, hasArcw, arcw, bufferedImage);
+    }
+
 
     /**
      * 绘制图片 到 画布上
@@ -178,8 +195,7 @@ public class ImageGraphicsDrawUtils {
      * @throws IOException
      */
     public static void draw4Image(Graphics2D g, InputStream imgInputStream, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
-
-        // 设置背景
+        // 读取图片
         BufferedImage image = ImageIO.read(imgInputStream);
 
         // 图片参数设置
@@ -209,8 +225,7 @@ public class ImageGraphicsDrawUtils {
      * @throws IOException
      */
     public static void draw4Image(Graphics2D g, File file, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
-
-        // 设置背景
+        // 读取图片
         BufferedImage image = ImageIO.read(file);
 
         // 图片参数设置
@@ -230,7 +245,6 @@ public class ImageGraphicsDrawUtils {
      * @param yn          每次换行偏移多少pt
      */
     public static void draw4Text(Graphics2D g, Color color, Font font, String text, int lastWidth, int x, int y, int yn) {
-
         g.setColor(color);
         g.setFont(font);
         FontMetrics fg = g.getFontMetrics(font);
@@ -298,6 +312,7 @@ public class ImageGraphicsDrawUtils {
         create.getGraphics2D().dispose();
         ImageIO.write(create.getCanvas(), "png", file);
     }
+
 
     /**
      * 将字节写入文件
