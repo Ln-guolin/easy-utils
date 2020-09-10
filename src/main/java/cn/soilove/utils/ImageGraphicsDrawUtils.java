@@ -202,16 +202,6 @@ public class ImageGraphicsDrawUtils {
         calcImage4Condition(g,image,width,height,x,y,hasArcw,arcw);
     }
 
-    private static void calcImage4Condition(Graphics2D g, BufferedImage image, int width, int height, int x, int y, boolean hasArcw, int arcw){
-        // 圆角处理
-        if(hasArcw){
-            image = calcImageArcw(image,arcw);
-        }
-
-        // 绘制到画布上
-        g.drawImage(image.getScaledInstance(width, height, Image.SCALE_DEFAULT), x, y, null);
-    }
-
     /**
      * 绘制图片 到 画布上
      * @param g 画布
@@ -368,6 +358,27 @@ public class ImageGraphicsDrawUtils {
         // 圆角处理
         if (hasArcw) {
             image = calcImageArcw(image, arcw);
+        }
+
+        // 绘制到画布上
+        g.drawImage(image.getScaledInstance(width, height, Image.SCALE_DEFAULT), x, y, null);
+    }
+
+    /**
+     * 图片参数设置
+     * @param g
+     * @param image
+     * @param width
+     * @param height
+     * @param x
+     * @param y
+     * @param hasArcw
+     * @param arcw
+     */
+    private static void calcImage4Condition(Graphics2D g, BufferedImage image, int width, int height, int x, int y, boolean hasArcw, int arcw){
+        // 圆角处理
+        if(hasArcw){
+            image = calcImageArcw(image,arcw);
         }
 
         // 绘制到画布上
