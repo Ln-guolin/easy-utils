@@ -20,6 +20,9 @@
 	<a href="https://github.com/Ln-guolin/common-utils">
         <img src="https://img.shields.io/github/issues-raw/Ln-guolin/common-utils"/>
     </a>
+    <a href="https://github.com/Ln-guolin/common-utils">
+        <img src="https://img.shields.io/github/v/tag/Ln-guolin/common-utils?include_prereleases"/>
+    </a>
 	<a href="https://github.com/Ln-guolin/common-utils">
         <img src="https://img.shields.io/github/stars/Ln-guolin/common-utils?style=social"/>
     </a>
