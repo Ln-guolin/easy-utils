@@ -265,6 +265,25 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
+     * 绘制文字 到 画布上 , 画布居中
+     * @param g
+     * @param color
+     * @param font
+     * @param text
+     * @param width 画布宽度
+     * @param y
+     */
+    public static void draw4TextCenter(Graphics2D g, Color color, Font font, String text, int width, int y) {
+        g.setColor(color);
+        g.setFont(font);
+        // 计算文字长度，计算居中的x点坐标
+        FontMetrics fm = g.getFontMetrics(font);
+        int textWidth = fm.stringWidth(text);
+        int x = (width - textWidth) / 2;
+        g.drawString(text,x,y);
+    }
+
+    /**
      * 绘制文字 到 画布上 , 带删除线
      * @param g
      * @param color
