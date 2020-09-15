@@ -429,10 +429,8 @@ public class ImageGraphicsDrawUtils {
             FontMetrics fm = g.getFontMetrics(font);
             int textWidth = fm.stringWidth(text);
             x = (create.getCanvas().getWidth() - textWidth) / 2;
-            g.drawString(text,x,y);
-        }else {
-            g.drawString(text, x, y);
         }
+        g.drawString(text, x, y);
     }
 
     /**
