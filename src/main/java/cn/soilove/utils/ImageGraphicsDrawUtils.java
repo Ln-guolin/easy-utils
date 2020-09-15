@@ -20,10 +20,19 @@ import java.util.ArrayList;
 public class ImageGraphicsDrawUtils {
 
     /**
-     * 画布创建，指定图片画布
-     * @param imageUrl 网络图片地址
-     * @param hasArcw 是否圆角
-     * @param arcw 圆角值，一般设置为80
+     * 画布创建 - 网络图片
+     * @param imageUrl     网络图片地址
+     * @return
+     */
+    public static GraphicsCreate createGraphics(String imageUrl) throws IOException {
+        return createGraphics(imageUrl,false,0);
+    }
+
+    /**
+     * 画布创建 - 网络图片
+     * @param imageUrl     网络图片地址
+     * @param hasArcw      是否圆角
+     * @param arcw         圆角值，一般设置为80
      * @return
      */
     public static GraphicsCreate createGraphics(String imageUrl,boolean hasArcw, int arcw) throws IOException {
@@ -46,19 +55,32 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
-     * 画布创建，直接绘制白色画布
-     * @param width 宽
-     * @param height 高
-     * @param hasArcw 是否圆角
-     * @param arcw 一般设置为80
+     * 画布创建
+     * @param width       宽
+     * @param height      高
+     * @param color       背景颜色
      * @return
      * @throws IOException
      */
-    public static GraphicsCreate createGraphics(int width, int height, boolean hasArcw, int arcw) {
+    public static GraphicsCreate createGraphics(int width, int height,Color color) {
+        return createGraphics(width,height,false,0,color);
+    }
+
+    /**
+     * 画布创建
+     * @param width       宽
+     * @param height      高
+     * @param hasArcw     是否圆角
+     * @param arcw        一般设置为80
+     * @param color       背景颜色
+     * @return
+     * @throws IOException
+     */
+    public static GraphicsCreate createGraphics(int width, int height, boolean hasArcw, int arcw,Color color) {
         // 设置背景
         BufferedImage bg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g4bg = bg.getGraphics();
-        g4bg.setColor(new Color(255, 255, 255));
+        g4bg.setColor(color);
         for (int i = 0; i < bg.getWidth(); i++) {
             for (int j = 0; j < bg.getHeight(); j++) {
                 g4bg.drawLine(i, j, bg.getWidth(), bg.getHeight());
@@ -82,40 +104,61 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
-     * 图片圆角处理
-     * @param midImage
-     * @param arcw
+     * 画布创建 - 直接绘制白色画布
+     * @param width       宽
+     * @param height      高
      * @return
+     * @throws IOException
      */
-    public static BufferedImage calcImageArcw(BufferedImage midImage, int arcw) {
-        BufferedImage outputImage = new BufferedImage(midImage.getWidth(), midImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = outputImage.createGraphics();
-        g2.setComposite(AlphaComposite.Src);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(Color.WHITE);
-        g2.fill(new RoundRectangle2D.Float(0, 0, midImage.getWidth(), midImage.getHeight(), arcw, arcw));
-        g2.setComposite(AlphaComposite.SrcAtop);
-        g2.drawImage(midImage, 0, 0, null);
-        g2.dispose();
-        return outputImage;
+    public static GraphicsCreate createGraphics(int width, int height){
+        return createGraphics(width,height,false,0);
+    }
+
+
+    /**
+     * 画布创建 - 直接绘制白色画布
+     * @param width       宽
+     * @param height      高
+     * @param hasArcw     是否圆角
+     * @param arcw        一般设置为80
+     * @return
+     * @throws IOException
+     */
+    public static GraphicsCreate createGraphics(int width, int height, boolean hasArcw, int arcw) {
+        return createGraphics(width,height,hasArcw,arcw,new Color(255, 255, 255));
     }
 
     /**
      * 绘制圆形图片 到 画布上
-     * @param g 画布
-     * @param imgUrl 网络图片地址
-     * @param widthHeight 图片宽高
-     * @param x 位置坐标，x
-     * @param y 位置坐标，y
+     * @param create        画布
+     * @param imgUrl        网络图片地址
+     * @param width         图片宽
+     * @param x             位置坐标，x
+     * @param y             位置坐标，y
      * @throws IOException
      */
-    public static void draw4RoundImage(Graphics2D g, String imgUrl,int widthHeight, int x, int y) throws IOException {
+    public static void draw4ImageRound(GraphicsCreate create, String imgUrl,int width, int x, int y) throws IOException {
+        draw4ImageRound(create,imgUrl,width,x,y,false);
+    }
+
+    /**
+     * 绘制圆形图片 到 画布上
+     * @param create        画布
+     * @param imgUrl        网络图片地址
+     * @param width         图片宽
+     * @param x             位置坐标，x
+     * @param y             位置坐标，y
+     * @param center        是否居中，true则坐标x失效
+     * @throws IOException
+     */
+    public static void draw4ImageRound(GraphicsCreate create, String imgUrl,int width, int x, int y, boolean center) throws IOException {
+        Graphics2D g = create.getGraphics2D();
 
         // 图片
         BufferedImage img = ImageIO.read(new URL(imgUrl));
 
         // 透明底的图片
-        BufferedImage newImg = new BufferedImage(widthHeight, widthHeight, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage newImg = new BufferedImage(width, width, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = newImg.createGraphics();
 
         // 抗锯齿处理
@@ -125,10 +168,10 @@ public class ImageGraphicsDrawUtils {
         int border = 1;
 
         // 图片是一个圆型
-        Ellipse2D.Double shape = new Ellipse2D.Double(border, border, widthHeight - border * 2, widthHeight - border * 2);
+        Ellipse2D.Double shape = new Ellipse2D.Double(border, border, width - border * 2, width - border * 2);
         // 需要保留的区域
         graphics.setClip(shape);
-        graphics.drawImage(img, border, border, widthHeight - border * 2, widthHeight - border * 2, null);
+        graphics.drawImage(img, border, border, width - border * 2, width - border * 2, null);
         graphics.dispose();
 
         // 新创建一个graphics，这样画的圆不会有锯齿
@@ -138,94 +181,264 @@ public class ImageGraphicsDrawUtils {
         // 使画笔时基本会像外延伸一定像素，具体可以自己使用的时候测试
         graphics.setStroke(new BasicStroke(2F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         graphics.setColor(Color.WHITE);
-        graphics.drawOval(border, border, widthHeight - border * 2, widthHeight - border * 2);
+        graphics.drawOval(border, border, width - border * 2, width - border * 2);
         graphics.dispose();
 
         // 绘制
-        g.drawImage(newImg.getScaledInstance(widthHeight, widthHeight, Image.SCALE_DEFAULT), x, y, null);
+        if(center){
+            x = (create.getCanvas().getWidth() - width) / 2;
+        }
+        g.drawImage(newImg.getScaledInstance(width, width, Image.SCALE_DEFAULT), x, y, null);
     }
 
     /**
-     * 绘制图片 到 画布上
-     * @param g 画布
-     * @param imgUrl 网络图片地址
-     * @param width 图片宽
-     * @param height 图片高
-     * @param x 位置，x
-     * @param y 位置，y
-     * @param hasArcw 是否圆角
-     * @param arcw 圆角值
+     * 绘制图片 到 画布上 - 网络图片
+     * @param create          画布
+     * @param imgUrl          网络图片地址
+     * @param width           图片宽
+     * @param height          图片高
+     * @param x               位置，x
+     * @param y               位置，y
      * @throws IOException
      */
-    public static void draw4Image(Graphics2D g, String imgUrl,int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+    public static void draw4Image(GraphicsCreate create, String imgUrl,int width, int height, int x, int y) throws IOException {
+        draw4Image(create,imgUrl,width,height,x,y,false,0,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 网络图片
+     * @param create          画布
+     * @param imgUrl          网络图片地址
+     * @param width           图片宽
+     * @param height          图片高
+     * @param x               位置，x
+     * @param y               位置，y
+     * @param hasArcw         是否圆角
+     * @param arcw            圆角值
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, String imgUrl,int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+        draw4Image(create,imgUrl,width,height,x,y,hasArcw,arcw,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 网络图片
+     * @param create          画布
+     * @param imgUrl          网络图片地址
+     * @param width           图片宽
+     * @param height          图片高
+     * @param x               位置，x
+     * @param y               位置，y
+     * @param hasArcw         是否圆角
+     * @param arcw            圆角值
+     * @param center          是否居中，true则坐标x失效
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, String imgUrl,int width, int height, int x, int y, boolean hasArcw, int arcw,boolean center) throws IOException {
+
         // 读取图片
         BufferedImage image = ImageIO.read(new URL(imgUrl));
-        // 绘制
-        calcDrawImage(g, width, height, x, y, hasArcw, arcw, image);
+
+        // 执行绘图
+        doDrwaImage(create, width, height, x, y, hasArcw, arcw, center, image);
     }
 
     /**
-     * 绘制图片 到 画布上
-     * @param g 画布
-     * @param bufferedImage 图片BufferedImage
-     * @param width 图片宽
-     * @param height 图片高
-     * @param x 位置，x
-     * @param y 位置，y
-     * @param hasArcw 是否圆角
-     * @param arcw 圆角值
-     * @throws IOException
+     * 绘制图片 到 画布上 - 图片BufferedImage
+     * @param create         画布
+     * @param image          图片BufferedImage
+     * @param width          图片宽
+     * @param height         图片高
+     * @param x              位置，x
+     * @param y              位置，y
      */
-    public static void draw4Image(Graphics2D g, BufferedImage bufferedImage,int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
-        // 绘制
-        calcDrawImage(g, width, height, x, y, hasArcw, arcw, bufferedImage);
+    public static void draw4Image(GraphicsCreate create, BufferedImage image,int width, int height, int x, int y) {
+        draw4Image(create,image,width,height,x,y,false,0,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 图片BufferedImage
+     * @param create         画布
+     * @param image          图片BufferedImage
+     * @param width          图片宽
+     * @param height         图片高
+     * @param x              位置，x
+     * @param y              位置，y
+     * @param hasArcw        是否圆角
+     * @param arcw           圆角值
+     */
+    public static void draw4Image(GraphicsCreate create, BufferedImage image,int width, int height, int x, int y, boolean hasArcw, int arcw) {
+        draw4Image(create,image,width,height,x,y,hasArcw,arcw,false);
     }
 
 
     /**
-     * 绘制图片 到 画布上
-     * @param g 画布
-     * @param imgInputStream 图片输入流
-     * @param width 图片宽
-     * @param height 图片高
-     * @param x 位置，x
-     * @param y 位置，y
-     * @param hasArcw 是否圆角
-     * @param arcw 圆角值
+     * 绘制图片 到 画布上 - 图片BufferedImage
+     * @param create         画布
+     * @param image          图片BufferedImage
+     * @param width          图片宽
+     * @param height         图片高
+     * @param x              位置，x
+     * @param y              位置，y
+     * @param hasArcw        是否圆角
+     * @param arcw           圆角值
+     * @param center         是否居中，true则坐标x失效
+     */
+    public static void draw4Image(GraphicsCreate create, BufferedImage image,int width, int height, int x, int y, boolean hasArcw, int arcw,boolean center) {
+        // 圆角处理
+        if(hasArcw){
+            image = calcImageArcw(image,arcw);
+        }
+
+        // 执行绘图
+        doDrwaImage(create, width, height, x, y, hasArcw, arcw, center, image);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 图片InputStream
+     * @param create            画布
+     * @param imgInputStream    图片输入流
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
      * @throws IOException
      */
-    public static void draw4Image(Graphics2D g, InputStream imgInputStream, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+    public static void draw4Image(GraphicsCreate create, InputStream imgInputStream, int width, int height, int x, int y) throws IOException {
+        draw4Image(create,imgInputStream,width,height,x,y,false,0,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 图片InputStream
+     * @param create            画布
+     * @param imgInputStream    图片输入流
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
+     * @param hasArcw           是否圆角
+     * @param arcw              圆角值
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, InputStream imgInputStream, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+        draw4Image(create,imgInputStream,width,height,x,y,hasArcw,arcw,false);
+    }
+
+
+    /**
+     * 绘制图片 到 画布上 - 图片InputStream
+     * @param create            画布
+     * @param imgInputStream    图片输入流
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
+     * @param hasArcw           是否圆角
+     * @param arcw              圆角值
+     * @param center            是否居中，true则坐标x失效
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, InputStream imgInputStream, int width, int height, int x, int y, boolean hasArcw, int arcw,boolean center) throws IOException {
         // 读取图片
         BufferedImage image = ImageIO.read(imgInputStream);
 
-        // 图片参数设置
-        calcImage4Condition(g,image,width,height,x,y,hasArcw,arcw);
+        // 执行绘图
+        doDrwaImage(create, width, height, x, y, hasArcw, arcw, center, image);
     }
 
     /**
-     * 绘制图片 到 画布上
-     * @param g 画布
-     * @param file 图片文件
-     * @param width 图片宽
-     * @param height 图片高
-     * @param x 位置，x
-     * @param y 位置，y
-     * @param hasArcw 是否圆角
-     * @param arcw 圆角值
+     * 绘制图片 到 画布上 - 图片File
+     * @param create            画布
+     * @param file              图片文件
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
      * @throws IOException
      */
-    public static void draw4Image(Graphics2D g, File file, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+    public static void draw4Image(GraphicsCreate create, File file, int width, int height, int x, int y) throws IOException {
+        draw4Image(create,file,width,height,x,y,false,0,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 图片File
+     * @param create            画布
+     * @param file              图片文件
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
+     * @param hasArcw           是否圆角
+     * @param arcw              圆角值
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, File file, int width, int height, int x, int y, boolean hasArcw, int arcw) throws IOException {
+        draw4Image(create,file,width,height,x,y,hasArcw,arcw,false);
+    }
+
+    /**
+     * 绘制图片 到 画布上 - 图片File
+     * @param create            画布
+     * @param file              图片文件
+     * @param width             图片宽
+     * @param height            图片高
+     * @param x                 位置，x
+     * @param y                 位置，y
+     * @param hasArcw           是否圆角
+     * @param arcw              圆角值
+     * @param center            是否居中，true则坐标x失效
+     * @throws IOException
+     */
+    public static void draw4Image(GraphicsCreate create, File file, int width, int height, int x, int y, boolean hasArcw, int arcw,boolean center) throws IOException {
         // 读取图片
         BufferedImage image = ImageIO.read(file);
 
-        // 图片参数设置
-        calcImage4Condition(g,image,width,height,x,y,hasArcw,arcw);
+        // 执行绘图
+        doDrwaImage(create, width, height, x, y, hasArcw, arcw, center, image);
+    }
+
+    /**
+     * 绘制文字 到 画布上
+     * @param create      画布
+     * @param color       颜色
+     * @param font        字体样式
+     * @param text        文字
+     * @param x           文字位置坐标 x
+     * @param y           文字位置坐标 Y
+     */
+    public static void draw4Text(GraphicsCreate create, Color color, Font font, String text, int x, int y) {
+        draw4Text(create,color,font,text,x,y,false);
+    }
+
+    /**
+     * 绘制文字 到 画布上
+     * @param create      画布
+     * @param color       颜色
+     * @param font        字体样式
+     * @param text        文字
+     * @param x           文字位置坐标 x
+     * @param y           文字位置坐标 Y
+     * @param center      是否居中，true则坐标x失效
+     */
+    public static void draw4Text(GraphicsCreate create, Color color, Font font, String text, int x, int y,boolean center) {
+        Graphics2D g = create.getGraphics2D();
+        g.setColor(color);
+        g.setFont(font);
+        if(center){
+            // 计算文字长度，计算居中的x点坐标
+            FontMetrics fm = g.getFontMetrics(font);
+            int textWidth = fm.stringWidth(text);
+            x = (create.getCanvas().getWidth() - textWidth) / 2;
+            g.drawString(text,x,y);
+        }else {
+            g.drawString(text, x, y);
+        }
     }
 
     /**
      * 绘制文字 到 画布上 ，自动换行
      *
-     * @param g           画布
+     * @param create      画布
      * @param color       颜色
      * @param font        字体样式
      * @param text        文字
@@ -234,7 +447,8 @@ public class ImageGraphicsDrawUtils {
      * @param y           文字位置坐标 Y
      * @param yn          每次换行偏移多少pt
      */
-    public static void draw4Text(Graphics2D g, Color color, Font font, String text, int lastWidth, int x, int y, int yn) {
+    public static void draw4TextWrap(GraphicsCreate create, Color color, Font font, String text, int lastWidth, int x, int y, int yn) {
+        Graphics2D g = create.getGraphics2D();
         g.setColor(color);
         g.setFont(font);
         FontMetrics fg = g.getFontMetrics(font);
@@ -250,53 +464,36 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
-     * 绘制文字 到 画布上
-     * @param g
-     * @param color
-     * @param font
-     * @param text
-     * @param x
-     * @param y
+     * 绘制文字 到 画布上 , 带删除线
+     * @param create      画布
+     * @param color       颜色
+     * @param font        字体样式
+     * @param text        文字
+     * @param x           文字位置坐标 x
+     * @param y           文字位置坐标 Y
      */
-    public static void draw4Text(Graphics2D g, Color color, Font font, String text, int x, int y) {
-        g.setColor(color);
-        g.setFont(font);
-        g.drawString(text, x, y);
+    public static void draw4TextDelLine(GraphicsCreate create, Color color, Font font, String text, int x, int y) {
+        draw4TextDelLine(create,color,font,text,x,y,0,text.length());
     }
 
-    /**
-     * 绘制文字 到 画布上 , 画布居中
-     * @param g
-     * @param color
-     * @param font
-     * @param text
-     * @param width 画布宽度
-     * @param y
-     */
-    public static void draw4TextCenter(Graphics2D g, Color color, Font font, String text, int width, int y) {
-        g.setColor(color);
-        g.setFont(font);
-        // 计算文字长度，计算居中的x点坐标
-        FontMetrics fm = g.getFontMetrics(font);
-        int textWidth = fm.stringWidth(text);
-        int x = (width - textWidth) / 2;
-        g.drawString(text,x,y);
-    }
 
     /**
      * 绘制文字 到 画布上 , 带删除线
-     * @param g
-     * @param color
-     * @param font
-     * @param text
-     * @param x
-     * @param y
+     * @param create      画布
+     * @param color       颜色
+     * @param font        字体样式
+     * @param text        文字
+     * @param x           文字位置坐标 x
+     * @param y           文字位置坐标 Y
+     * @param beginIndex4DelLine           删除线开始下标
+     * @param endIndex4DelLine             删除线结束下标
      */
-    public static void draw4TextDelLine(Graphics2D g, Color color, Font font, String text, int x, int y) {
+    public static void draw4TextDelLine(GraphicsCreate create, Color color, Font font, String text, int x, int y, int beginIndex4DelLine, int endIndex4DelLine) {
+        Graphics2D g = create.getGraphics2D();
         g.setColor(color);
         AttributedString as = new AttributedString(text);
         as.addAttribute(TextAttribute.FONT, font);
-        as.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON, 0, text.length());
+        as.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON, beginIndex4DelLine, endIndex4DelLine);
         g.drawString(as.getIterator(), x, y);
     }
 
@@ -320,6 +517,25 @@ public class ImageGraphicsDrawUtils {
     public static void write(GraphicsCreate create,File file) throws IOException {
         create.getGraphics2D().dispose();
         ImageIO.write(create.getCanvas(), "png", file);
+    }
+
+    /**
+     * 图片圆角处理
+     * @param midImage
+     * @param arcw
+     * @return
+     */
+    public static BufferedImage calcImageArcw(BufferedImage midImage, int arcw) {
+        BufferedImage outputImage = new BufferedImage(midImage.getWidth(), midImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = outputImage.createGraphics();
+        g2.setComposite(AlphaComposite.Src);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+        g2.fill(new RoundRectangle2D.Float(0, 0, midImage.getWidth(), midImage.getHeight(), arcw, arcw));
+        g2.setComposite(AlphaComposite.SrcAtop);
+        g2.drawImage(midImage, 0, 0, null);
+        g2.dispose();
+        return outputImage;
     }
 
 
@@ -363,46 +579,32 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
-     * 图片参数设置
-     * @param g
+     * 执行绘制
+     * @param create
      * @param width
      * @param height
      * @param x
      * @param y
      * @param hasArcw
      * @param arcw
+     * @param center
      * @param image
      */
-    private static void calcDrawImage(Graphics2D g, int width, int height, int x, int y, boolean hasArcw, int arcw, BufferedImage image) {
-        // 圆角处理
-        if (hasArcw) {
-            image = calcImageArcw(image, arcw);
-        }
-
-        // 绘制到画布上
-        g.drawImage(image.getScaledInstance(width, height, Image.SCALE_DEFAULT), x, y, null);
-    }
-
-    /**
-     * 图片参数设置
-     * @param g
-     * @param image
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param hasArcw
-     * @param arcw
-     */
-    private static void calcImage4Condition(Graphics2D g, BufferedImage image, int width, int height, int x, int y, boolean hasArcw, int arcw){
+    private static void doDrwaImage(GraphicsCreate create, int width, int height, int x, int y, boolean hasArcw, int arcw, boolean center, BufferedImage image) {
         // 圆角处理
         if(hasArcw){
             image = calcImageArcw(image,arcw);
         }
 
-        // 绘制到画布上
+        // 绘制
+        if(center){
+            x = (create.getCanvas().getWidth() - width) / 2;
+        }
+
+        Graphics2D g = create.getGraphics2D();
         g.drawImage(image.getScaledInstance(width, height, Image.SCALE_DEFAULT), x, y, null);
     }
+
 
     public static class GraphicsCreate{
         private Graphics2D graphics2D;
