@@ -48,6 +48,7 @@ Maven方式引入：直接在工程pom.xml文件中添加如下依赖，即可�
 src
 └── utils
     ├── AESUtils.java                 // AES加解密
+    ├── AvatarUtils.java              // 文字头像生成工具
     ├── EmojiUtils.java               // Emoji表情转换
     ├── ExcelUtils.java               // Ali EasyExcel文件操作
     ├── ImageGraphicsDrawUtils.java   // 图片绘制工具
