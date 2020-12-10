@@ -33,7 +33,7 @@ public class AvatarUtils {
 
         // 绘制文本到背景图上
         ImageGraphicsDrawUtils.draw4Text(create,
-                Color.WHITE,new Font("宋体", Font.BOLD, 30),txt,0,50,true);
+                Color.WHITE,new Font("宋体", Font.PLAIN, 30),txt,0,50,true);
 
         String filename = imageLocalPath + File.separator + UUID.randomUUID() + ".png";
         File file = new File(filename);
