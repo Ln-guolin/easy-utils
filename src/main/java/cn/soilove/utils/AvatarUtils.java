@@ -31,9 +31,11 @@ public class AvatarUtils {
         ImageGraphicsDrawUtils.GraphicsCreate create = ImageGraphicsDrawUtils.createGraphics(
                 width_height,width_height,true,90,getRandomColor());
 
+        // 设置渐变
+        GradientPaint paint = new GradientPaint(20, 25, getRandomColor(), 50,50, Color.WHITE, true);
+
         // 绘制文本到背景图上
-        ImageGraphicsDrawUtils.draw4Text(create,
-                Color.WHITE,new Font("宋体", Font.PLAIN, 30),txt,0,50,true);
+        ImageGraphicsDrawUtils.draw4Text(create, paint,new Font("宋体", Font.PLAIN, 30),txt,0,50,true);
 
         String filename = imageLocalPath + File.separator + UUID.randomUUID() + ".png";
         File file = new File(filename);
@@ -47,7 +49,7 @@ public class AvatarUtils {
      * @return
      */
     private static Color getRandomColor() {
-        return new Color(random.nextInt(255) + 1, random.nextInt(255) + 1, random.nextInt(255) + 1);
+        return new Color(random.nextInt(180) + 30, random.nextInt(180) + 30, random.nextInt(180) + 30);
     }
 
     /**
@@ -66,17 +68,6 @@ public class AvatarUtils {
         }
         // 其他情况显示末尾2个字符
         return nickName.substring(nickName.length() - 2);
-    }
-
-    /**
-     * @throws IOException
-     * @throws
-     **/
-    public static void main(String[] args) throws IOException {
-        create("张三", "/Users/chenguolin/Downloads");
-        create("y张三", "/Users/chenguolin/Downloads");
-        create("张三d", "/Users/chenguolin/Downloads");
-        create("Dssdsd", "/Users/chenguolin/Downloads");
     }
 }
 

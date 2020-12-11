@@ -43,7 +43,8 @@ public class RSAUtils {
         try {
             keyFactory = KeyFactory.getInstance(ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
-           throw new RuntimeException("[rsa]创建KeyFactory实例异常");
+            log.error("[RSA_EXCEPTION][rsa]创建KeyFactory实例异常！",e);
+            throw new RuntimeException("[rsa]创建KeyFactory实例异常");
         }
     }
 
@@ -76,6 +77,7 @@ public class RSAUtils {
 
             return Base64.encodeBase64String(resultBytes);
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]私钥加密发生异常！content=" + content + "，privateKey=" + privateKey,e);
             throw new RuntimeException("[rsa]私钥加密发生异常"+e.getMessage());
         }
     }
@@ -101,6 +103,7 @@ public class RSAUtils {
 
             return new String(resultBytes);
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]公钥解密发生异常！content=" + content + "，publicKey=" + publicKey,e);
             throw new RuntimeException("[rsa]公钥解密发生异常"+e.getMessage());
         }
     }
@@ -126,6 +129,7 @@ public class RSAUtils {
            byte[] resultBytes = out.toByteArray();
            return Base64.encodeBase64String(resultBytes);
        }catch (Exception e){
+           log.error("[RSA_EXCEPTION][rsa]公钥加密发生异常！content=" + content + "，publicKey=" + publicKey,e);
            throw new RuntimeException("[rsa]公钥加密发生异常"+e.getMessage());
        }
     }
@@ -150,6 +154,7 @@ public class RSAUtils {
             byte[] resultBytes = out.toByteArray();
             return new String(resultBytes);
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]私钥解密发生异常！content=" + content + "，privateKey=" + privateKey,e);
             throw new RuntimeException("[rsa]私钥解密发生异常"+e.getMessage());
         }
     }
@@ -173,6 +178,7 @@ public class RSAUtils {
 
             return new Base64().encodeToString(signature.sign());
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]用私钥对信息生成数字签名发生异常！data=" + data + "，privateKey=" + privateKey,e);
             throw new RuntimeException("[rsa]用私钥对信息生成数字签名发生异常"+e.getMessage());
         }
     }
@@ -196,6 +202,7 @@ public class RSAUtils {
             signature.update(parse2HexStr(data).getBytes(CHARSET));
             return signature.verify(new Base64().decode(sign));
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]校验数字签名验证异常！data=" + data + "，publicKey=" + publicKey + "，sign=" + sign,e);
             throw new RuntimeException("[rsa]校验数字签名验证失败");
         }
     }
@@ -220,6 +227,7 @@ public class RSAUtils {
             }
             return sb.toString();
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]将二进制转换成16进制发生异常！data=" + data,e);
             throw new RuntimeException("[rsa]将二进制转换成16进制发生异常"+e.getMessage());
         }
     }
@@ -243,6 +251,7 @@ public class RSAUtils {
             res.put(RSAKeyType.PRIVATE_KEY,privateKey);
             return res;
         }catch (Exception e){
+            log.error("[RSA_EXCEPTION][rsa]生成公钥与私钥发生异常！",e);
             throw new RuntimeException("[rsa]生成公钥与私钥发生异常"+e.getMessage());
         }
     }

@@ -1,5 +1,7 @@
 package cn.soilove.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
@@ -12,6 +14,7 @@ import java.util.Base64;
  * @author: Chen GuoLin
  * @create: 2020-02-04 10:26
  **/
+@Slf4j
 public class AESUtils {
     private static final String ALG_NAME = "AES";
     // 密钥长度
@@ -37,6 +40,7 @@ public class AESUtils {
             keyGenerator.init(ALG_KEY_SIZE); // 密钥长度，可选：128，192或256
             return Base64.getEncoder().encodeToString(keyGenerator.generateKey().getEncoded());
         } catch (Exception e) {
+            log.error("[AES_EXCEPTION]生成实时AES密钥发生异常！",e);
             throw new RuntimeException("获取密钥失败" + e.getMessage());
         }
     }
@@ -58,6 +62,7 @@ public class AESUtils {
             byte[] encBytes = cipher.doFinal(content.getBytes(CHARSET));
             return Base64.getEncoder().encodeToString(encBytes);
         } catch (Exception e) {
+            log.error("[AES_EXCEPTION]AES加密发生异常！",e);
             throw new RuntimeException("AES加密失败" + e.getMessage());
         }
     }
@@ -79,6 +84,7 @@ public class AESUtils {
             byte[] cleanBytes = cipher.doFinal(Base64.getDecoder().decode(content.getBytes()));
             return new String(cleanBytes, CHARSET);
         } catch (Exception e) {
+            log.error("[AES_EXCEPTION]AES解密发生异常！",e);
             throw new RuntimeException("AES解密失败" + e.getMessage());
         }
     }

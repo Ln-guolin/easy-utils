@@ -37,7 +37,9 @@ public class QLExpressUtils {
         try{
             // 表达式执行
             Object r = expressRunner.execute(express, null, null, true, false);
-            log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
+            if(log.isInfoEnabled()){
+                log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
+            }
             return r;
         }catch (Exception e){
             log.error("[QL]表达式执行异常！express=" + express,e);
@@ -54,7 +56,9 @@ public class QLExpressUtils {
         try{
             // 表达式执行
             Object r = expressRunner4NoPrecise.execute(express, null, null, true, false);
-            log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
+            if(log.isInfoEnabled()){
+                log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString());
+            }
             return r;
         }catch (Exception e){
             log.error("[QL]表达式执行异常！express=" + express,e);
@@ -76,10 +80,12 @@ public class QLExpressUtils {
 
             // 表达式执行
             Object r = expressRunner.execute(express, context, null, true, false);
-            log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString() + "，content=" + context.toString());
+            if(log.isInfoEnabled()){
+                log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString() + "，content=" + context.toString());
+            }
             return r;
         }catch (Exception e){
-            log.error("[QL]表达式执行异常！express=" + express,e);
+            log.error("[QL]表达式执行异常！express=" + express + "，matedata=" + matedata,e);
             return null;
         }
     }
@@ -127,10 +133,12 @@ public class QLExpressUtils {
 
             // 表达式执行
             Object r = expressRunner.execute(express, context, null, true, false);
-            log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString() + "，content=" + context.toString()+ "，macro=" + macro.toString());
+            if(log.isInfoEnabled()){
+                log.info("[QL]表达式执行！express="+ express + "，执行结果=" + r.toString() + "，content=" + context.toString()+ "，macro=" + macro.toString());
+            }
             return r;
         }catch (Exception e){
-            log.error("[QL]表达式执行异常！express=" + express,e);
+            log.error("[QL]表达式执行异常！express=" + express + "，matedata="+matedata + "，macro=" + macro + "，alias=" + macro,e);
             return null;
         }
     }
@@ -179,11 +187,13 @@ public class QLExpressUtils {
             for(String key : macro.keySet()){
                 Object r = expressRunner.execute(key, context, null, true, false);
                 result.put(key,r);
-                log.info("[QL]表达式执行！key="+ key + "，公式：" + macro.get(key) + "，执行结果=" + r.toString());
+                if(log.isInfoEnabled()){
+                    log.info("[QL]表达式执行！key="+ key + "，公式：" + macro.get(key) + "，执行结果=" + r.toString());
+                }
             }
             return result;
         }catch (Exception e){
-            log.error("[QL]表达式执行异常",e);
+            log.error("[QL]表达式执行异常！matedata="+matedata + "，macro=" + macro + "，alias=" + macro,e);
             return null;
         }
     }

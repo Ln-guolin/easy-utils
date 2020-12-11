@@ -41,7 +41,7 @@ public class ExcelUtils {
      * @return Excel文件本地路径
      */
     public static String write(String fileName,String sheetName,Class head,List data){
-        log.info("[excel][write]开始文件写入...");
+        log.info("[excel][write]开始文件写入...fileName="+fileName);
         String filePath = PathUtils.getProjectTmpPath() + fileName + "-" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(filePath)
                 .head(head)
@@ -60,16 +60,16 @@ public class ExcelUtils {
      * @param datas Map<String, Map<Class,List>> datas = Maps.newLinkedHashMap(); 保障sheet顺序
      */
     public static String write(String fileName, Map<String, Map<Class,List>> datas){
-        log.info("[excel][write]开始文件写入并输出流...");
+        log.info("[excel][write]开始文件写入并输出流...fileName="+fileName);
         String filePath = PathUtils.getProjectTmpPath() + fileName  + "-" +  System.currentTimeMillis() + ".xlsx";
         try {
             ExcelWriter excelWriter = EasyExcel.write(filePath).build();
             // excel writer操作
             excelWriterManyCalc(excelWriter,datas);
-            log.info("[excel][write]文件写入和输出完成！");
+            log.info("[excel][write]文件写入和输出完成！fileName="+fileName);
             return filePath;
         } catch (Exception e) {
-            log.error("[excel][write]文件写入和输出异常，EasyExcel.write 报错！",e);
+            log.error("[excel][write]文件写入和输出异常，EasyExcel.write 报错！fileName="+fileName,e);
             return null;
         }
     }
@@ -84,13 +84,13 @@ public class ExcelUtils {
      * @param data
      */
     public static void write(OutputStream outputStream,  String sheetName, Class head, List data){
-        log.info("[excel][write]开始文件写入并输出流...");
+        log.info("[excel][write]开始文件写入并输出流...sheetName=" + sheetName);
         try {
             EasyExcel.write(outputStream)
                     .head(head)
                     .sheet(sheetName)
                     .doWrite(data);
-            log.info("[excel][write]文件写入和输出完成！");
+            log.info("[excel][write]文件写入和输出完成！sheetName=" + sheetName);
         } catch (Exception e) {
             log.error("[excel][write]文件写入和输出异常，EasyExcel.write 报错！",e);
             return;
@@ -129,10 +129,10 @@ public class ExcelUtils {
      */
     public static List read(InputStream inputStream, Class head){
         try {
-            log.info("[excel][read]开始解析文件..");
+            log.info("[excel][read]开始解析文件..head=" + head.getName());
             SyncReadListener listener = new SyncReadListener();
             EasyExcel.read(inputStream, head, listener).sheet().doRead();
-            log.info("[excel][read]解析文件完成，一共解析行数：" + listener.getList().size());
+            log.info("[excel][read]解析文件完成，head=" + head.getName() + "，一共解析行数：" + listener.getList().size());
             return listener.getList();
         } catch (Exception e) {
             log.error("[excel][read]文件解析异常！",e);

@@ -434,6 +434,29 @@ public class ImageGraphicsDrawUtils {
     }
 
     /**
+     * 绘制文字 到 画布上 - 文字渐变
+     * @param create      画布
+     * @param paint       颜色
+     * @param font        字体样式
+     * @param text        文字
+     * @param x           文字位置坐标 x
+     * @param y           文字位置坐标 Y
+     * @param center      是否居中，true则坐标x失效
+     */
+    public static void draw4Text(GraphicsCreate create, GradientPaint paint, Font font, String text, int x, int y,boolean center) {
+        Graphics2D g = create.getGraphics2D();
+        g.setPaint(paint);
+        g.setFont(font);
+        if(center){
+            // 计算文字长度，计算居中的x点坐标
+            FontMetrics fm = g.getFontMetrics(font);
+            int textWidth = fm.stringWidth(text);
+            x = (create.getCanvas().getWidth() - textWidth) / 2;
+        }
+        g.drawString(text, x, y);
+    }
+
+    /**
      * 绘制文字 到 画布上 ，自动换行
      *
      * @param create      画布

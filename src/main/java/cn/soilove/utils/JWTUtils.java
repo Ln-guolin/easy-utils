@@ -45,7 +45,7 @@ public class JWTUtils {
             verifier.verify(token);
             return true;
         } catch (Exception e) {
-            log.error("[token][verify]token验证不通过！token=" + token);
+            log.error("[token][verify]token验证不通过！token=" + token + "，claimName=" + claimName,e);
             return false;
         }
     }
@@ -59,7 +59,7 @@ public class JWTUtils {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim(CLAIM_NAME).asString();
         } catch (JWTDecodeException e) {
-            log.error("[token][getClaimName]token参数获取异常！token=" + token);
+            log.error("[token][getClaimName]token参数获取异常！token=" + token,e);
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class JWTUtils {
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {
-            log.error("[token][create]token创建异常！claimName=" + claimName);
+            log.error("[token][create]token创建异常！claimName=" + claimName,e);
             return null;
         }
     }
