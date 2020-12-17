@@ -32,14 +32,6 @@ public class ThreadPoolUtils {
         }
         return executorService;
     }
-    /**
-     * 【运行】单线程线程池，池子里的线程按照提交的先后顺序执行
-     * @param bizName
-     */
-    public static void newSingleThreadExecutor(String bizName,Runnable command){
-        ExecutorService executorService = newSingleThreadExecutor(bizName);
-        executorService.execute(command);
-    }
 
     /**
      * 可缓存线程池，当有线程任务完成时，下一个新线程会复用已完成的线程，不新建线程，线程无顺序
@@ -54,14 +46,6 @@ public class ThreadPoolUtils {
             log.info("[thread_pool][newCachedThreadPool]创建新线程池！bizName=" + bizName);
         }
         return executorService;
-    }
-    /**
-     * 【运行】可缓存线程池，当有线程任务完成时，下一个新线程会复用已完成的线程，不新建线程，线程无顺序
-     * @param bizName
-     */
-    public static void newCachedThreadPool(String bizName,Runnable command){
-        ExecutorService executorService = newCachedThreadPool(bizName);
-        executorService.execute(command);
     }
 
     /**
@@ -78,17 +62,6 @@ public class ThreadPoolUtils {
             log.info("[thread_pool][newFixedThreadPool]创建新线程池！bizName=" + bizName);
         }
         return executorService;
-    }
-
-    /**
-     * 【运行】定长线程池，可以设置最大并发数，超出最大限制的线程排队等待
-     * @param bizName
-     * @param nThreads
-     * @return
-     */
-    public static void newFixedThreadPool(String bizName,int nThreads,Runnable command){
-        ExecutorService executorService = newFixedThreadPool(bizName,nThreads);
-        executorService.execute(command);
     }
 
     /**
@@ -181,9 +154,8 @@ public class ThreadPoolUtils {
      * 创建自定义参数线程池
      * <pre>
      *         // 示例
-     *         ExecutorService scheduledExecutorService = ThreadPoolUtils.newThreadPoolExecutor("test", 2, 2, 60, TimeUnit.SECONDS, 3, "[ssss]-sss-%s",
-     *                 () -> System.out.println("警告：线程池排队数量超限，任务添加失败！"));
-     *         scheduledExecutorService.execute(() -> System.out.println("执行示例..."));
+     *         ThreadPoolUtils.newThreadPoolExecutor("test", 2, 2, 60, TimeUnit.SECONDS, 3, "[ssss]-sss-%s",() -> System.out.println("警告：线程池排队数量超限，任务添加失败！"))
+     *         .execute(() -> System.out.println("执行示例..."));
      * </pre>
      * @param bizName
      * @param corePoolSize 线程池的基本大小，即使线程已经闲置，也会保留在池中的线程数
