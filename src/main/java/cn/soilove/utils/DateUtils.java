@@ -15,7 +15,7 @@ import java.util.TimeZone;
  * TimeUtils
  *
  */
-public class TimeUtils {
+public class DateUtils {
 	/** 1分钟的毫秒数 */
 	public final static long MILLISECOND_MINUTE = 60 * 1000;
 	/** 1小时的毫秒数 */
@@ -38,7 +38,7 @@ public class TimeUtils {
 	public final static String FORMAT_DAY_START = "yyyy-MM-dd 00:00:00";
 	public final static String FORMAT_DAY_END = "yyyy-MM-dd 23:59:59";
 
-	private TimeUtils() {
+	private DateUtils() {
 		throw new AssertionError();
 	}
 
