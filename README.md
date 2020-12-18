@@ -52,7 +52,8 @@ src
     ├── EmojiUtils.java               // Emoji表情转换
     ├── BloomFilterUtils.java         // 布隆过滤器工具
     ├── CaffeineCacheUtils.java       // 本地Caffeine缓存工具
-    ├── ExcelUtils.java               // Ali EasyExcel文件操作
+    ├── ExcelUtils.java               // Ali EasyExcel文件操作ForkJoinUtils
+    ├── ForkJoinUtils.java            // 并行工具
     ├── ImageGraphicsDrawUtils.java   // 图片绘制工具
     ├── JWTUtils.java                 // JWT Token生成工具
     ├── JiebaUtils.java               // 结巴分词
