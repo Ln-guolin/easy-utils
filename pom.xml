@@ -165,7 +165,7 @@
 
     <!--scm信息-->
     <scm>
-        <url>http://git.soilove.cn/root/spring-boot-starter-cache</url>
+        <url>https://github.com/Ln-guolin/easy-utils</url>
     </scm>
 
     <!--licenses信息 -->
