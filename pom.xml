@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.soilove</groupId>
-    <artifactId>common-utils</artifactId>
-    <version>1.1.7</version>
-    <name>common-utils</name>
-    <description>common utils</description>
+    <artifactId>easy-utils</artifactId>
+    <version>1.1.8</version>
+    <name>easy-utils</name>
+    <description>easy utils</description>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
