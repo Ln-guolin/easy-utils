@@ -1,11 +1,11 @@
 <p align="center">
-	<a href="https://github.com/Ln-guolin/common-utils"><img src="https://soilove.oss-cn-hangzhou.aliyuncs.com/32e/pro-mall/easy-utils.png" width="350px"></a>
+	<a href="https://github.com/Ln-guolin/easy-utils"><img src="https://soilove.oss-cn-hangzhou.aliyuncs.com/32e/pro-mall/easy-utils.png" width="350px"></a>
 </p>
 <p align="center">
 	<strong>一个整合了Java开发过程中，比较常用的简单工具类集合。</strong>
 </p>
 <p align="center">
-	<a target="_blank" href="https://github.com/Ln-guolin/common-utils/blob/master/LICENSE">
+	<a target="_blank" href="https://github.com/Ln-guolin/easy-utils/blob/master/LICENSE">
 		<img src="https://img.shields.io/:license-Apache2.0-blue.svg" />
 	</a>
 	<a target="_blank" href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">
@@ -14,17 +14,17 @@
 	<a target="_blank" href="https://gitter.im/pro-32e/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
 		<img src="https://badges.gitter.im/pro-32e/community.svg" />
 	</a>
-	<a href="https://github.com/Ln-guolin/common-utils">
-        <img src="https://img.shields.io/github/languages/code-size/Ln-guolin/common-utils"/>
+	<a href="https://github.com/Ln-guolin/easy-utils">
+        <img src="https://img.shields.io/github/languages/code-size/Ln-guolin/easy-utils"/>
     </a>
-	<a href="https://github.com/Ln-guolin/common-utils">
-        <img src="https://img.shields.io/github/issues-raw/Ln-guolin/common-utils"/>
+	<a href="https://github.com/Ln-guolin/easy-utils">
+        <img src="https://img.shields.io/github/issues-raw/Ln-guolin/easy-utils"/>
     </a>
-    <a href="https://github.com/Ln-guolin/common-utils">
-        <img src="https://img.shields.io/github/v/tag/Ln-guolin/common-utils?include_prereleases"/>
+    <a href="https://github.com/Ln-guolin/easy-utils">
+        <img src="https://img.shields.io/github/v/tag/Ln-guolin/easy-utils?include_prereleases"/>
     </a>
-	<a href="https://github.com/Ln-guolin/common-utils">
-        <img src="https://img.shields.io/github/stars/Ln-guolin/common-utils?style=social"/>
+	<a href="https://github.com/Ln-guolin/easy-utils">
+        <img src="https://img.shields.io/github/stars/Ln-guolin/easy-utils?style=social"/>
     </a>
 </p>
 
