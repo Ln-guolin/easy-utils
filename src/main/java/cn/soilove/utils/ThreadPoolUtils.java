@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.stream.IntStream;
 
 /**
  * 线程池
@@ -23,7 +24,7 @@ public class ThreadPoolUtils {
      * @param bizName
      * @return
      */
-    public static ExecutorService newSingleThreadExecutor(String bizName){
+    public static synchronized ExecutorService newSingleThreadExecutor(String bizName){
         ExecutorService executorService = executorServiceMap.get(bizName);
         if(executorService == null || executorService.isShutdown()){
             executorService = Executors.newSingleThreadExecutor();
@@ -38,7 +39,7 @@ public class ThreadPoolUtils {
      * @param bizName
      * @return
      */
-    public static ExecutorService newCachedThreadPool(String bizName){
+    public static synchronized ExecutorService newCachedThreadPool(String bizName){
         ExecutorService executorService = executorServiceMap.get(bizName);
         if(executorService == null || executorService.isShutdown()){
             executorService = Executors.newCachedThreadPool();
@@ -54,7 +55,7 @@ public class ThreadPoolUtils {
      * @param nThreads
      * @return
      */
-    public static ExecutorService newFixedThreadPool(String bizName,int nThreads){
+    public static synchronized ExecutorService newFixedThreadPool(String bizName,int nThreads){
         ExecutorService executorService = executorServiceMap.get(bizName);
         if(executorService == null || executorService.isShutdown()){
             executorService = Executors.newFixedThreadPool(nThreads);
@@ -82,7 +83,7 @@ public class ThreadPoolUtils {
      * @param nThreads
      * @return
      */
-    public static ScheduledExecutorService newScheduledThreadPool(String bizName,int nThreads){
+    public static synchronized ScheduledExecutorService newScheduledThreadPool(String bizName,int nThreads){
         ScheduledExecutorService executorService = scheduledExecutorServiceMap.get(bizName);
         if(executorService == null || executorService.isShutdown()){
             executorService = Executors.newScheduledThreadPool(nThreads);
@@ -103,7 +104,7 @@ public class ThreadPoolUtils {
      * @param nameFormat 如：ThreadPool-Order-%s
      * @return
      */
-    public static ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
+    public static synchronized ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
                                                           long keepAliveTime,TimeUnit keepAliveTimeTimeUnit,int max_queue_len,String nameFormat){
         ExecutorService executorService = executorServiceMap.get(bizName);
         if(executorService == null || executorService.isShutdown()){
@@ -132,7 +133,7 @@ public class ThreadPoolUtils {
      * @param rejectedExecutionHandler 拒绝策略，可以自己去实现RejectedExecutionHandler接口
      * @return
      */
-    public static ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
+    public static synchronized ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
                                                         long keepAliveTime,TimeUnit keepAliveTimeTimeUnit,int max_queue_len,
                                                         String nameFormat,RejectedExecutionHandler rejectedExecutionHandler){
         ExecutorService executorService = executorServiceMap.get(bizName);
@@ -167,7 +168,7 @@ public class ThreadPoolUtils {
      * @param rejected 拒绝策略自定义处理
      * @return
      */
-    public static ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
+    public static synchronized ExecutorService newThreadPoolExecutor(String bizName,int corePoolSize,int maximumPoolSize,
                                                         long keepAliveTime,TimeUnit keepAliveTimeTimeUnit,int max_queue_len,
                                                         String nameFormat,Runnable rejected){
         return newThreadPoolExecutor(bizName, corePoolSize, maximumPoolSize, keepAliveTime, keepAliveTimeTimeUnit, max_queue_len, nameFormat, new MyRejectPolicy(rejected));
@@ -178,8 +179,22 @@ public class ThreadPoolUtils {
         public MyRejectPolicy(Runnable rejected) {
             this.rejected = rejected;
         }
+        @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
             this.rejected.run();
         }
+    }
+
+    public static void main(String[] args) {
+        IntStream.range(1,20).parallel().forEach(n -> {
+            ThreadPoolUtils.newFixedThreadPool("test",2).execute(() -> {
+                System.out.println("print="+System.currentTimeMillis());
+                try {
+                    Thread.sleep(3000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
     }
 }

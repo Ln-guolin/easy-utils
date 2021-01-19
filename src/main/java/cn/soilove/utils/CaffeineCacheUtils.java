@@ -238,7 +238,7 @@ public class CaffeineCacheUtils {
      * @param expireSecond
      * @return
      */
-    private static Cache<Object, Object> loadCaffeine(String module, long expireSecond){
+    private static synchronized Cache<Object, Object> loadCaffeine(String module, long expireSecond){
         Cache<Object, Object> caffeineCache = cacheMap.get(module);
         if(caffeineCache == null){
             caffeineCache = Caffeine.newBuilder()
