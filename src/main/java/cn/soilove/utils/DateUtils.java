@@ -64,6 +64,15 @@ public class DateUtils {
 	}
 
 	/**
+	 * 获取指定格式的时间Date
+	 * @param timeInSecond
+	 * @return
+	 */
+	public static String getTime4Second(long timeInSecond) {
+		return getTime(timeInSecond * 1000,FORMAT_YYYY_MM_DD_HH_SMM_SS);
+	}
+
+	/**
 	 * 获取指定格式的时间字符
 	 *
 	 * @param timeInMillis
@@ -72,6 +81,17 @@ public class DateUtils {
 	 */
 	public static String getTime(long timeInMillis, String format) {
 		return new SimpleDateFormat(format).format(new Date(timeInMillis));
+	}
+
+	/**
+	 * 获取指定格式的时间字符
+	 *
+	 * @param timeInSecond
+	 * @param format
+	 * @return
+	 */
+	public static String getTime4Second(long timeInSecond, String format) {
+		return new SimpleDateFormat(format).format(new Date(timeInSecond * 1000));
 	}
 
 	/**
@@ -443,9 +463,6 @@ public class DateUtils {
 
 
 	public static void main(String[] args) {
-		System.out.println(betweenFormat("2020-08-12 11:11:11","2021-12-15 11:11:11"));
+		System.out.println(getTime4Second(1611033877));
 	}
-
-
-
 }
