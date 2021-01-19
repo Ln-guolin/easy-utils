@@ -40,7 +40,7 @@ public class BloomFilterUtils {
      * @param fpp 期望的假阳性概率 0-1之间取值，值越小越精确，消耗的内存也更大，如：0.00001
      * @return
      */
-    public static BloomFilter<CharSequence> create(String namespace, int expectedInsertions,Double fpp){
+    public static synchronized BloomFilter<CharSequence> create(String namespace, int expectedInsertions,Double fpp){
         BloomFilter<CharSequence> bloomFilter = bloomFilterMap.get(namespace);
         if(bloomFilter == null){
             bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), expectedInsertions, fpp != null ? fpp : DEF_FPP);
