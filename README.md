@@ -38,7 +38,7 @@ Maven方式引入：直接在工程pom.xml文件中添加如下依赖，即可�
 <dependency>
     <groupId>cn.soilove</groupId>
     <artifactId>easy-utils</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
 </dependency>
 ```
 
@@ -54,6 +54,7 @@ src
     ├── CaffeineCacheUtils.java       // 本地Caffeine缓存工具
     ├── ExcelUtils.java               // Ali EasyExcel文件操作
     ├── ForkJoinUtils.java            // 并行工具
+    ├── HttpClientUtils.java          // HttpClients请求工具类
     ├── ImageGraphicsDrawUtils.java   // 图片绘制工具
     ├── JWTUtils.java                 // JWT Token生成工具
     ├── JiebaUtils.java               // 结巴分词
