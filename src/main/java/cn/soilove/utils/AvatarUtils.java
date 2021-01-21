@@ -28,18 +28,18 @@ public class AvatarUtils {
         String txt = getDrawTxt(nickName);
 
         // 创建背景图
-        ImageGraphicsDrawUtils.GraphicsCreate create = ImageGraphicsDrawUtils.createGraphics(
+        ImageGraphicsUtils.GraphicsCreate create = ImageGraphicsUtils.createGraphics(
                 width_height,width_height,true,90,getRandomColor());
 
         // 设置渐变
         GradientPaint paint = new GradientPaint(20, 25, getRandomColor(), 50,50, Color.WHITE, true);
 
         // 绘制文本到背景图上
-        ImageGraphicsDrawUtils.draw4Text(create, paint,new Font("宋体", Font.PLAIN, 30),txt,0,50,true);
+        ImageGraphicsUtils.draw4Text(create, paint,new Font("宋体", Font.PLAIN, 30),txt,0,50,true);
 
         String filename = imageLocalPath + File.separator + UUID.randomUUID() + ".png";
         File file = new File(filename);
-        ImageGraphicsDrawUtils.write(create,file);
+        ImageGraphicsUtils.write(create,file);
 
         return file.getPath();
     }

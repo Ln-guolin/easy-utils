@@ -8,9 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * excel工具
@@ -75,9 +78,19 @@ public class ExcelUtils {
     }
 
     /**
-     * Excel下载 - 面向Controller
+     * Excel写入输出流
      * <pre>
-     *     HttpServletResponse头部信息处理：请参考底部注释方法responseCalc()
+     *  Controller下载示例：
+     *
+     *     @PostMapping(value = "/download")
+     *     public void download(HttpServletResponse response){
+     *          // 获取数据
+     *          List<Test> data = queryDatas();
+     *          // 设置头部信息
+     *          responseCalc(response,"文件名");
+     *          // 输出流
+     *          ExcelUtils.write(response.getOutputStream(),"Sheet表名", Test.class,data);
+     *      }
      * </pre>
      * @param sheetName
      * @param head
@@ -98,11 +111,19 @@ public class ExcelUtils {
     }
 
     /**
-     * Excel下载 - 多表 - 面向Controller
+     * Excel写入输出流 - 多表
      * <pre>
-     *     datas数据描述： Map<sheet名，Map<表头，数据>>
+     *  Controller下载示例：
      *
-     *     HttpServletResponse头部信息处理：请参考底部注释方法responseCalc()
+     *     @PostMapping(value = "/download")
+     *     public void download(HttpServletResponse response){
+     *          // 获取数据
+     *          Map<String, Map<Class,List>> datas = queryDatas();
+     *          // 设置头部信息
+     *          responseCalc(response,"文件名");
+     *          // 输出流
+     *          ExcelUtils.write(response.getOutputStream(),datas);
+     *      }
      * </pre>
      * @param datas Map<String, Map<Class,List>> datas = Maps.newLinkedHashMap(); 保障sheet顺序
      */
@@ -118,6 +139,25 @@ public class ExcelUtils {
             log.error("[excel][write]文件写入和输出异常，EasyExcel.write 报错！",e);
             return;
         }
+    }
+
+    /**
+     * 加载下载文件头部信息
+     * @param response
+     * @param fileName
+     */
+    public static void buildDownloadResponse(HttpServletResponse response, String fileName){
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        try {
+            // 这里URLEncoder.encode可以防止中文乱码
+            fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            log.error("[excel][buildDownloadResponse]文件输出异常，URLEncoder.encode 报错！",e);
+            return;
+        }
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
     }
 
 
@@ -175,24 +215,5 @@ public class ExcelUtils {
         excelWriter.finish();
     }
 
-    /**
-     * 文件头部处理方法
-     *
 
-    private static void responseCalc(HttpServletResponse response, String fileName){
-        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-
-        try {
-            // 这里URLEncoder.encode可以防止中文乱码
-            fileName = URLEncoder.encode(fileName, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            log.error("[excel][write]文件写入和输出异常，URLEncoder.encode 报错！",e);
-            return;
-        }
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-    }
-
-     */
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author: Chen GuoLin
  * @create: 2020-09-10 11:02
  **/
-public class ImageGraphicsDrawUtils {
+public class ImageGraphicsUtils {
 
     /**
      * 画布创建 - 网络图片
