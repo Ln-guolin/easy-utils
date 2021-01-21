@@ -621,7 +621,7 @@ public class HttpClientUtils {
                     log.error("[buildHttpGetUri]URLEncoder.encode Error! k=" + k + ",v=" + v, e);
                 }
                 // uri存在参数，追加，uri不存在参数，直接封装
-                if (uri.contains("?")) {
+                if (uriBuffer.toString().contains("?")) {
                     uriBuffer.append("&");
                 } else {
                     uriBuffer.append("?");
