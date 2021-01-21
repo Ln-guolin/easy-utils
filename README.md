@@ -55,7 +55,7 @@ src
     ├── ExcelUtils.java               // Ali EasyExcel文件操作
     ├── ForkJoinUtils.java            // 并行工具
     ├── HttpClientUtils.java          // HttpClients请求工具类
-    ├── ImageGraphicsDrawUtils.java   // 图片绘制工具
+    ├── ImageGraphicsUtils.java       // 图片绘制工具
     ├── JWTUtils.java                 // JWT Token生成工具
     ├── JiebaUtils.java               // 结巴分词
     ├── KeyMapUtils.java              // 字符Map互转工具
