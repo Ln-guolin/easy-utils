@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -72,18 +71,13 @@ public class JWTUtils {
      * @return 加密的token
      */
     public static String sign(String claimName, String secret, long hours) {
-        try {
-            Date date = new Date(System.currentTimeMillis() + expireMillisecond(hours));
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            // 附带claimName信息
-            return JWT.create()
-                    .withClaim(CLAIM_NAME, claimName)
-                    .withExpiresAt(date)
-                    .sign(algorithm);
-        } catch (UnsupportedEncodingException e) {
-            log.error("[token][create]token创建异常！claimName=" + claimName,e);
-            return null;
-        }
+        Date date = new Date(System.currentTimeMillis() + expireMillisecond(hours));
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        // 附带claimName信息
+        return JWT.create()
+                .withClaim(CLAIM_NAME, claimName)
+                .withExpiresAt(date)
+                .sign(algorithm);
     }
 
     /**
