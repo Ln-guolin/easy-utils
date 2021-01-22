@@ -38,7 +38,7 @@ Maven方式引入：直接在工程pom.xml文件中添加如下依赖，即可�
 <dependency>
     <groupId>cn.soilove</groupId>
     <artifactId>easy-utils</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
