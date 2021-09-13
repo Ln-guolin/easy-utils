@@ -66,6 +66,13 @@ public class OrikaMapperUtils {
         return TypeFactory.valueOf(rawType);
     }
 
+    public static <S, D> void configFieldMap(Class<S> sourceClass, Class<D> destinationClass, Map<String,String> fieldMap){
+        ClassMapBuilder classMapBuilder = factory.classMap(sourceClass, destinationClass);
+        fieldMap.forEach(classMapBuilder::field);
+        classMapBuilder.byDefault().register();
+        mapper = factory.getMapperFacade();
+    }
+
     static {
         factory = (new Builder()).build();
         mapper = factory.getMapperFacade();
