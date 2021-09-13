@@ -50,7 +50,7 @@ public class CaffeineCacheUtils {
 
     /**
      * 动态时间缓存map
-     * key=缓存module
+     * key=缓存namespace
      * value=Caffeine.newBuilder()
      */
     private static final Map<String, Cache<Object, Object>> cacheMap = new ConcurrentHashMap<>();
@@ -172,80 +172,80 @@ public class CaffeineCacheUtils {
     }
 
     /**
-     * 获取缓存、无则设值 - 动态缓存、模块
-     * @param module
+     * 获取缓存、无则设值 - 动态缓存、命名空间
+     * @param namespace
      * @param key
      * @param expireSecond
      * @param supplier
      * @param <R>
      * @return
      */
-    public static <R> R get(String module,String key, long expireSecond, Supplier<R> supplier){
+    public static <R> R get(String namespace,String key, long expireSecond, Supplier<R> supplier){
         // 获取缓存
-        Cache<Object, Object> caffeineCache = loadCaffeine(module,expireSecond);
+        Cache<Object, Object> caffeineCache = loadCaffeine(namespace,expireSecond);
 
         return getR4Set(caffeineCache,key,supplier);
     }
 
     /**
-     * 获取缓存 - 动态缓存、模块
-     * @param module
+     * 获取缓存 - 动态缓存、命名空间
+     * @param namespace
      * @param key
      * @param <R>
      * @return
      */
-    public static <R> R get(String module,String key){
-        Cache<Object, Object> caffeineCache = cacheMap.get(module);
+    public static <R> R get(String namespace,String key){
+        Cache<Object, Object> caffeineCache = cacheMap.get(namespace);
         return getR(key, caffeineCache);
     }
 
     /**
-     * 缓存设值 - 动态缓存、模块
-     * @param module
+     * 缓存设值 - 动态缓存、命名空间
+     * @param namespace
      * @param key
      * @param expireSecond
      * @param obj
      */
-    public static void set(String module,String key, long expireSecond, Object obj) {
+    public static void set(String namespace,String key, long expireSecond, Object obj) {
         // 获取缓存
-        Cache<Object, Object> caffeineCache = loadCaffeine(module,expireSecond);
+        Cache<Object, Object> caffeineCache = loadCaffeine(namespace,expireSecond);
         caffeineCache.put(key,obj);
     }
 
     /**
-     * 删除缓存 - 动态缓存、模块
-     * @param module
+     * 删除缓存 - 动态缓存、命名空间
+     * @param namespace
      * @param key
      */
-    public static void del(String module,String key){
-        Cache<Object, Object> caffeineCache = cacheMap.get(module);
+    public static void del(String namespace,String key){
+        Cache<Object, Object> caffeineCache = cacheMap.get(namespace);
         if(caffeineCache != null){
             caffeineCache.invalidate(key);
         }
     }
 
     /**
-     * 删除缓存模块 - 动态缓存、模块
-     * @param module
+     * 删除缓存命名空间 - 动态缓存、命名空间
+     * @param namespace
      */
-    public static void del(String module){
-        cacheMap.remove(module);
+    public static void del(String namespace){
+        cacheMap.remove(namespace);
     }
 
     /**
      * 加载Caffeine对象
-     * @param module
+     * @param namespace
      * @param expireSecond
      * @return
      */
-    private static synchronized Cache<Object, Object> loadCaffeine(String module, long expireSecond){
-        Cache<Object, Object> caffeineCache = cacheMap.get(module);
+    private static Cache<Object, Object> loadCaffeine(String namespace, long expireSecond){
+        Cache<Object, Object> caffeineCache = cacheMap.get(namespace);
         if(caffeineCache == null){
             caffeineCache = Caffeine.newBuilder()
                     .maximumSize(LOCAL_CAFFEINE_MAXIMUM_SIZE)
                     .expireAfterWrite(expireSecond, TimeUnit.SECONDS)
                     .build();
-            cacheMap.put(module,caffeineCache);
+            cacheMap.put(namespace,caffeineCache);
         }
         return caffeineCache;
     }

@@ -27,5 +27,4 @@ public class EmojiUtils {
     public static String parseToEmoji(String text){
         return EmojiParser.parseToUnicode(text);
     }
-
 }
