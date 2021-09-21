@@ -232,12 +232,4 @@ public class JGitUtils {
         }
     }
 
-
-    public static void main(String[] args) {
-        String giturl = "http://u.32e.co:8122/git/root/test02.git";
-        String lourl = PathUtils.getProjectPath() + "/template/bp";
-        gitClone(giturl,"master",lourl,"root","root");
-        gitPull(lourl,"master","root","root");
-    }
-
 }
